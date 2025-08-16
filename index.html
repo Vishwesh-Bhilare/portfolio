@@ -12,7 +12,6 @@
       --neon-cyan: #00fff0;
       --neon-pink: #ff3ff1;
       --neon-yellow: #ffee00;
-      --shadow: 0 0 6px var(--neon-cyan), 0 0 12px var(--neon-cyan), 0 0 30px var(--neon-cyan);
     }
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body {
@@ -27,20 +26,57 @@
       transition: transform 0.6s cubic-bezier(.55,.06,.68,.19);
     }
     section {
-      flex: 0 0 100%; /* full width per panel */
+      flex: 0 0 100%;
       display: flex; justify-content: center; align-items: center;
-      flex-direction: column;
-      padding: 40px;
-      text-align: center;
+      flex-direction: column; text-align: center;
+      padding: 40px; position: relative;
+      overflow: hidden;
     }
-
     h1,h2 { font-family:"Press Start 2P", monospace; text-transform:uppercase; }
-    h1 { font-size: 32px; text-shadow: var(--shadow); color: var(--neon-cyan); }
-    h2 { font-size: 20px; color: var(--neon-yellow); margin-bottom: 16px; }
+    h1 { font-size: 32px; text-shadow: 0 0 8px var(--neon-cyan); }
+    h2 { font-size: 20px; margin-bottom: 16px; }
 
     p { max-width: 600px; font-size: 18px; margin: 10px auto; }
 
-    /* Slider controls */
+    /* Shared retro vibes */
+    .blink { animation: blink 1s steps(1,end) infinite; }
+    @keyframes blink { 50% { opacity: 0; } }
+
+    /* Section themes */
+    .intro { background: radial-gradient(circle at center, #001010 0%, #000 70%); color: var(--neon-cyan); }
+    .intro h1 { font-size: 40px; }
+    
+    .platformer { background: linear-gradient(to top, #2b1055, #000); color: var(--neon-yellow); }
+    .ground {
+      position: absolute; bottom: 0; left: 0; right: 0;
+      height: 40px; background: repeating-linear-gradient(
+        45deg, var(--neon-pink) 0 10px, var(--neon-yellow) 10px 20px
+      );
+      animation: scrollGround 2s linear infinite;
+    }
+    @keyframes scrollGround { from { background-position: 0 0; } to { background-position: 40px 0; } }
+
+    .shooter { background: #000; color: var(--neon-cyan); }
+    .stars::before {
+      content: ""; position: absolute; inset: 0;
+      background: url("https://i.imgur.com/8K4lUDJ.png"); /* star sprite sheet look */
+      opacity: 0.6; animation: starScroll 20s linear infinite;
+    }
+    @keyframes starScroll { from { background-position: 0 0; } to { background-position: 0 1000px; } }
+
+    .fighter { background: #110011; color: var(--neon-pink); }
+    .healthbar {
+      position: absolute; top: 20px; left: 50%; transform: translateX(-50%);
+      width: 80%; height: 12px; border: 2px solid var(--neon-cyan);
+      background: #222;
+    }
+    .hp { height: 100%; width: 80%; background: var(--neon-pink); }
+
+    .highscore { background: #001; color: var(--neon-yellow); }
+    table { border-collapse: collapse; margin-top: 20px; }
+    td { padding: 6px 20px; border-bottom: 1px dashed var(--neon-cyan); }
+
+    /* Controls */
     .controls {
       position: absolute; bottom: 0; left: 0; right: 0;
       display: flex; align-items: center; justify-content: space-between;
@@ -53,8 +89,7 @@
       background: transparent; border: 2px solid var(--neon-pink);
       color: var(--neon-pink); padding: 6px 14px; cursor: pointer;
     }
-    .btn:hover { box-shadow: var(--shadow); }
-
+    .btn:hover { box-shadow: 0 0 6px var(--neon-pink); }
     .progress {
       flex: 1; height: 8px; margin: 0 20px;
       background: rgba(255,255,255,0.1);
@@ -69,25 +104,41 @@
 </head>
 <body>
   <div class="slider" id="slider">
-    <section>
-      <h1>Hello, I'm Vishwesh</h1>
-      <p>Retro-styled web + hardware tinkerer. Welcome to my neon space!</p>
+    <!-- Intro - Start Screen -->
+    <section class="intro">
+      <h1>Vishwesh</h1>
+      <p class="blink">[ PRESS START ]</p>
     </section>
-    <section>
+
+    <!-- About - Platformer -->
+    <section class="platformer">
       <h2>About</h2>
       <p>Shy, curious, and always experimenting with ESP32, Arduino, and funky frontends.</p>
+      <div class="ground"></div>
     </section>
-    <section>
+
+    <!-- Projects - Space Shooter -->
+    <section class="shooter">
+      <div class="stars"></div>
       <h2>Projects</h2>
       <p>ESP32 Pixel Buddy • Motion Glove • Algo-Viz • Virtual Gift Site</p>
     </section>
-    <section>
+
+    <!-- Skills - Fighting Game -->
+    <section class="fighter">
+      <div class="healthbar"><div class="hp"></div></div>
       <h2>Skills</h2>
       <p>C++, Arduino, ESP32, Python, JS, HTML/CSS, GitHub, Neovim</p>
     </section>
-    <section>
-      <h2>Contact</h2>
-      <p>Email: your@email.com • GitHub: your-username</p>
+
+    <!-- Contact - High Score -->
+    <section class="highscore">
+      <h2>High Score</h2>
+      <table>
+        <tr><td>GitHub</td><td>@your-username</td></tr>
+        <tr><td>Email</td><td>your@email.com</td></tr>
+        <tr><td>LinkedIn</td><td>linkedin.com/in/yourprofile</td></tr>
+      </table>
     </section>
   </div>
 
@@ -118,7 +169,6 @@
       updateSlider();
     };
 
-    // Keyboard controls
     document.addEventListener("keydown", e => {
       if (e.key === "ArrowRight") { if (index < total-1) { index++; updateSlider(); } }
       if (e.key === "ArrowLeft") { if (index > 0) { index--; updateSlider(); } }
