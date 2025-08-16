@@ -17,57 +17,22 @@
         /* General & Body Styles */
         * { box-sizing: border-box; margin: 0; padding: 0; }
         body {
-            background: var(--bg); color: var(--fg);
+            background-color: var(--bg);
+            color: var(--fg);
             font-family: "VT323", monospace;
-            height: 100vh; overflow: hidden;
-            position: relative;
-            perspective: 1000px;
-            cursor: default; /* Keep default cursor */
-        }
-
-        /* Layered Backgrounds for Depth */
-        .background-layers {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            pointer-events: none;
-            z-index: -1;
+            height: 100vh;
             overflow: hidden;
-        }
-        .stars-1 {
-            background-image: radial-gradient(2px 2px at 20px 30px, var(--fg), rgba(248, 248, 242, 0)),
-                              radial-gradient(2px 2px at 40px 70px, var(--fg), rgba(248, 248, 242, 0));
-            background-size: 150px 150px;
-            animation: star-move-1 60s linear infinite;
-        }
-        .stars-2 {
-            background-image: radial-gradient(1px 1px at 50px 50px, var(--fg), rgba(248, 248, 242, 0));
-            background-size: 200px 200px;
-            animation: star-move-2 120s linear infinite;
-        }
-        .grid-overlay {
-            background: repeating-linear-gradient(to right, rgba(255, 255, 255, 0.05) 0 2px, transparent 2px 10px),
-                        repeating-linear-gradient(to bottom, rgba(255, 255, 255, 0.05) 0 2px, transparent 2px 10px);
-            background-size: 50px 50px;
-            animation: grid-pulse 4s infinite alternate;
-            opacity: 0.15;
-            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            position: relative;
+            cursor: default;
+            
+            /* New Background */
+            background-image: url('http://googleusercontent.com/image_generation_content/1');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
         }
 
-        @keyframes star-move-1 { from { background-position: 0 0; } to { background-position: 10000px 5000px; } }
-        @keyframes star-move-2 { from { background-position: 0 0; } to { background-position: 20000px 10000px; } }
-        @keyframes grid-pulse { from { opacity: 0.1; } to { opacity: 0.25; } }
-
-        /* CRT Screen & Glitch Effects */
-        .crt-effect {
-            position: fixed; top: 0; left: 0; right: 0; bottom: 0;
-            pointer-events: none;
-            z-index: 99;
-            animation: crt-flicker 0.2s infinite;
-        }
-        @keyframes crt-flicker {
-            0% { opacity: 0.1; }
-            50% { opacity: 0.05; }
-            100% { opacity: 0.1; }
-        }
+        /* CRT Glitch Effect */
         .glitch-anim {
             animation: text-glitch 0.2s steps(2, end) infinite;
         }
@@ -77,18 +42,11 @@
             100% { transform: translate(0, 0); text-shadow: 2px 2px 0 var(--neon-pink); }
         }
 
-        /* Parallax Container */
-        .parallax-container {
-            width: 100%; height: 100%;
-            transition: transform 0.2s ease-out;
-            transform-style: preserve-3d;
-        }
-
         /* Main Slider & Content */
         .slider {
             display: flex; height: 100%;
             transition: transform 0.8s cubic-bezier(0.645, 0.045, 0.355, 1);
-            transform-style: preserve-3d;
+            background: rgba(0, 0, 0, 0.4); /* Semi-transparent overlay to make text readable */
         }
         section {
             flex: 0 0 100%;
@@ -97,7 +55,6 @@
             padding: 40px;
             text-align: center;
             position: relative;
-            transform: translateZ(50px);
         }
         h1,h2,h3 { font-family:"Press Start 2P", monospace; text-transform:uppercase; }
         h1 { font-size: 36px; text-shadow: 0 0 6px var(--neon-cyan), 0 0 12px var(--neon-cyan), 0 0 24px var(--neon-cyan); color: var(--neon-cyan); }
@@ -114,7 +71,6 @@
             border-radius: 10px;
             max-width: 700px;
             backdrop-filter: blur(2px);
-            transform: translateZ(20px);
         }
         .projects-grid {
             display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
@@ -127,10 +83,9 @@
             border-radius: 12px;
             box-shadow: 0 0 12px var(--neon-cyan);
             transition: transform 0.3s, box-shadow 0.3s;
-            transform: translateZ(10px);
         }
         .card:hover { 
-            transform: scale(1.05) translateZ(30px); 
+            transform: scale(1.05); 
             box-shadow: 0 0 25px var(--neon-cyan), 0 0 50px var(--neon-cyan); 
         }
 
@@ -197,7 +152,6 @@
             color: var(--neon-cyan);
             box-shadow: 0 0 12px var(--neon-cyan);
             backdrop-filter: blur(4px);
-            transform: translateZ(20px);
         }
         .blink { animation: blink 1s steps(1) infinite; }
         @keyframes blink { 50% { opacity: 0; } }
@@ -211,58 +165,50 @@
     </style>
 </head>
 <body>
-    <div class="background-layers">
-        <div class="stars-1"></div>
-        <div class="stars-2"></div>
-        <div class="grid-overlay"></div>
-    </div>
-    
-    <div class="parallax-container" id="parallax-container">
-        <div class="slider" id="slider">
-            <section>
-                <h1 class="glitch-text">Vishwesh</h1>
-                <p>Welcome to my neon arcade of code & circuits.</p>
-            </section>
+    <div class="slider" id="slider">
+        <section>
+            <h1 class="glitch-anim">Vishwesh</h1>
+            <p>Welcome to my neon arcade of code & circuits.</p>
+        </section>
 
-            <section>
-                <div class="arcade-box">
-                    <h2>About Me</h2>
-                    <p>Shy but curious explorer of retro tech vibes, microcontrollers, and creative web UIs.</p>
-                    <p>Gymnast • Badminton player • Gamer • Reader • Tinkerer</p>
-                </div>
-            </section>
+        <section>
+            <div class="arcade-box">
+                <h2>About Me</h2>
+                <p>Shy but curious explorer of retro tech vibes, microcontrollers, and creative web UIs.</p>
+                <p>Gymnast • Badminton player • Gamer • Reader • Tinkerer</p>
+            </div>
+        </section>
 
-            <section>
-                <h2>Projects</h2>
-                <div class="projects-grid">
-                    <div class="card"><h3>ESP32 Pixel Buddy</h3><p>Fun OLED animations with ESP32.</p></div>
-                    <div class="card"><h3>Motion Glove</h3><p>Gyro-powered glove controlling mouse & games.</p></div>
-                    <div class="card"><h3>Algo Visualizer</h3><p>Step-by-step retro algorithm animations.</p></div>
-                    <div class="card"><h3>Virtual Gift Site</h3><p>Fancy gradient + polaroid styled web gifting.</p></div>
-                </div>
-            </section>
+        <section>
+            <h2>Projects</h2>
+            <div class="projects-grid">
+                <div class="card"><h3>ESP32 Pixel Buddy</h3><p>Fun OLED animations with ESP32.</p></div>
+                <div class="card"><h3>Motion Glove</h3><p>Gyro-powered glove controlling mouse & games.</p></div>
+                <div class="card"><h3>Algo Visualizer</h3><p>Step-by-step retro algorithm animations.</p></div>
+                <div class="card"><h3>Virtual Gift Site</h3><p>Fancy gradient + polaroid styled web gifting.</p></div>
+            </div>
+        </section>
 
-            <section>
-                <h2>Skills</h2>
-                <div class="skills-grid">
-                    <div class="skill"><h3>C++</h3><div class="bar"><div class="fill" style="width:90%"></div></div></div>
-                    <div class="skill"><h3>Arduino/ESP32</h3><div class="bar"><div class="fill" style="width:95%"></div></div></div>
-                    <div class="skill"><h3>Python</h3><div class="bar"><div class="fill" style="width:80%"></div></div></div>
-                    <div class="skill"><h3>Web (HTML/CSS/JS)</h3><div class="bar"><div class="fill" style="width:75%"></div></div></div>
-                    <div class="skill"><h3>GitHub</h3><div class="bar"><div class="fill" style="width:70%"></div></div></div>
-                </div>
-            </section>
+        <section>
+            <h2>Skills</h2>
+            <div class="skills-grid">
+                <div class="skill"><h3>C++</h3><div class="bar"><div class="fill" style="width:90%"></div></div></div>
+                <div class="skill"><h3>Arduino/ESP32</h3><div class="bar"><div class="fill" style="width:95%"></div></div></div>
+                <div class="skill"><h3>Python</h3><div class="bar"><div class="fill" style="width:80%"></div></div></div>
+                <div class="skill"><h3>Web (HTML/CSS/JS)</h3><div class="bar"><div class="fill" style="width:75%"></div></div></div>
+                <div class="skill"><h3>GitHub</h3><div class="bar"><div class="fill" style="width:70%"></div></div></div>
+            </div>
+        </section>
 
-            <section>
-                <div class="terminal">
-                    <p>> CONNECTING TO PORTFOLIO...</p>
-                    <p>> ACCESS GRANTED ✔</p>
-                    <p>> EMAIL: <span class="blink">your@email.com</span></p>
-                    <p>> GITHUB: <span class="blink">github.com/your-username</span></p>
-                    <p>> INSERT COIN TO CONTINUE...</p>
-                </div>
-            </section>
-        </div>
+        <section>
+            <div class="terminal">
+                <p>> CONNECTING TO PORTFOLIO...</p>
+                <p>> ACCESS GRANTED ✔</p>
+                <p>> EMAIL: <span class="blink">your@email.com</span></p>
+                <p>> GITHUB: <span class="blink">github.com/your-username</span></p>
+                <p>> INSERT COIN TO CONTINUE...</p>
+            </div>
+        </section>
     </div>
     
     <div class="controls">
@@ -275,7 +221,6 @@
         const slider = document.getElementById("slider");
         const progressBar = document.getElementById("progress");
         const sections = document.querySelectorAll("section");
-        const parallaxContainer = document.getElementById("parallax-container");
         const total = sections.length;
         let index = 0;
 
@@ -298,17 +243,8 @@
             if (e.key === "ArrowLeft" && index > 0) { index--; updateSlider(); }
         });
 
-        // Parallax effect
-        document.addEventListener('mousemove', e => {
-            const midX = window.innerWidth / 2;
-            const midY = window.innerHeight / 2;
-            const degX = (e.clientY - midY) * -0.01;
-            const degY = (e.clientX - midX) * 0.01;
-            parallaxContainer.style.transform = `rotateX(${degX}deg) rotateY(${degY}deg)`;
-        });
-
         // Glitch effect
-        const glitcheableElements = document.querySelectorAll('h1, h2, h3, p, .card, .arcade-box, .terminal');
+        const glitcheableElements = document.querySelectorAll('h1, h2, h3, p');
         function applyRandomGlitch() {
             const randomElement = glitcheableElements[Math.floor(Math.random() * glitcheableElements.length)];
             randomElement.classList.add('glitch-anim');
