@@ -1,210 +1,246 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Vishwesh • Retro Portfolio</title>
-  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap" rel="stylesheet">
-  <style>
-    :root {
-      --bg: #000;
-      --fg: #f8f8f2;
-      --neon-cyan: #00fff0;
-      --neon-pink: #ff3ff1;
-      --neon-yellow: #ffee00;
-    }
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    body {
-      background: var(--bg); color: var(--fg);
-      font-family: "VT323", monospace;
-      height: 100vh; overflow: hidden;
-    }
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Vishwesh • Retro Portfolio</title>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #000;
+            --fg: #f8f8f2;
+            --neon-cyan: #00fff0;
+            --neon-pink: #ff3ff1;
+            --neon-yellow: #ffee00;
+        }
 
-    /* Horizontal layout */
-    .slider {
-      display: flex; height: 100%;
-      transition: transform 0.6s cubic-bezier(.55,.06,.68,.19);
-    }
-    section {
-      flex: 0 0 100%; /* full width per panel */
-      display: flex; justify-content: center; align-items: center;
-      flex-direction: column;
-      padding: 40px;
-      text-align: center;
-      position: relative;
-    }
+        /* General & Body Styles */
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            background: var(--bg); color: var(--fg);
+            font-family: "VT323", monospace;
+            height: 100vh; overflow: hidden;
+            position: relative;
+            /* Starfield & Grid */
+            background-image: radial-gradient(2px 2px at 20px 30px, var(--fg), rgba(248, 248, 242, 0)),
+                              radial-gradient(2px 2px at 40px 70px, var(--fg), rgba(248, 248, 242, 0));
+            background-size: 150px 150px;
+            animation: star-move 60s linear infinite;
+        }
 
-    h1,h2,h3 { font-family:"Press Start 2P", monospace; text-transform:uppercase; }
-    h1 { font-size: 36px; text-shadow: 0 0 6px var(--neon-cyan),0 0 12px var(--neon-cyan); color: var(--neon-cyan); }
-    h2 { font-size: 20px; margin-bottom: 16px; color: var(--neon-yellow); }
-    h3 { font-size: 16px; color: var(--neon-pink); margin-bottom: 8px; }
-    p { max-width: 700px; font-size: 18px; margin: 10px auto; }
+        @keyframes star-move {
+            from { background-position: 0 0; }
+            to { background-position: 10000px 5000px; }
+        }
 
-    /* Arcade panels */
-    .arcade-box {
-      border: 3px solid var(--neon-pink);
-      padding: 20px;
-      background: rgba(0,0,0,0.6);
-      box-shadow: 0 0 10px var(--neon-pink),0 0 20px var(--neon-pink);
-      border-radius: 10px;
-      max-width: 700px;
-    }
+        /* Glitch Effect */
+        .glitch-text {
+            animation: glitch-anim 2s infinite linear alternate-reverse;
+        }
+        @keyframes glitch-anim {
+            0%, 5% { text-shadow: 0 0 6px var(--neon-cyan),0 0 12px var(--neon-cyan); transform: translate(0, 0); }
+            10% { text-shadow: 2px 2px 6px var(--neon-cyan), -2px -2px 12px var(--neon-cyan); transform: translate(-2px, 2px); }
+            15% { text-shadow: -2px 2px 6px var(--neon-cyan), 2px -2px 12px var(--neon-cyan); transform: translate(2px, -2px); }
+            20%, 100% { text-shadow: 0 0 6px var(--neon-cyan),0 0 12px var(--neon-cyan); transform: translate(0, 0); }
+        }
 
-    /* Project Cards */
-    .projects-grid {
-      display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 20px; width: 90%; margin-top: 20px;
-    }
-    .card {
-      background: rgba(0,0,0,0.8);
-      border: 2px solid var(--neon-cyan);
-      padding: 20px;
-      border-radius: 12px;
-      box-shadow: 0 0 12px var(--neon-cyan);
-      transition: transform 0.3s;
-    }
-    .card:hover { transform: scale(1.05); box-shadow: 0 0 25px var(--neon-cyan); }
+        /* Layout & Typography */
+        .slider {
+            display: flex; height: 100%;
+            transition: transform 0.8s cubic-bezier(0.645, 0.045, 0.355, 1);
+        }
+        section {
+            flex: 0 0 100%;
+            display: flex; justify-content: center; align-items: center;
+            flex-direction: column;
+            padding: 40px;
+            text-align: center;
+            position: relative;
+        }
+        h1,h2,h3 { font-family:"Press Start 2P", monospace; text-transform:uppercase; }
+        h1 { font-size: 36px; text-shadow: 0 0 6px var(--neon-cyan), 0 0 12px var(--neon-cyan), 0 0 24px var(--neon-cyan); color: var(--neon-cyan); }
+        h2 { font-size: 20px; margin-bottom: 16px; color: var(--neon-yellow); text-shadow: 0 0 4px var(--neon-yellow); }
+        h3 { font-size: 16px; color: var(--neon-pink); margin-bottom: 8px; text-shadow: 0 0 4px var(--neon-pink); }
+        p { max-width: 700px; font-size: 18px; margin: 10px auto; }
 
-    /* Skills with power bars */
-    .skills-grid {
-      display: grid; grid-template-columns: repeat(auto-fit, minmax(200px,1fr));
-      gap: 20px; width: 80%; margin-top: 20px;
-    }
-    .skill {
-      text-align: left;
-    }
-    .bar {
-      height: 14px;
-      background: rgba(255,255,255,0.1);
-      border: 2px solid var(--neon-yellow);
-      position: relative;
-    }
-    .fill {
-      height: 100%;
-      background: var(--neon-yellow);
-      box-shadow: 0 0 12px var(--neon-yellow);
-    }
+        /* Arcade Panels & Cards */
+        .arcade-box {
+            border: 3px solid var(--neon-pink);
+            padding: 20px;
+            background: rgba(0,0,0,0.6);
+            box-shadow: 0 0 10px var(--neon-pink), 0 0 20px var(--neon-pink), 0 0 40px var(--neon-pink) inset;
+            border-radius: 10px;
+            max-width: 700px;
+            backdrop-filter: blur(2px);
+        }
+        .projects-grid {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 20px; width: 90%; margin-top: 20px;
+        }
+        .card {
+            background: rgba(0,0,0,0.8);
+            border: 2px solid var(--neon-cyan);
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 0 12px var(--neon-cyan);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        .card:hover { 
+            transform: scale(1.05); 
+            box-shadow: 0 0 25px var(--neon-cyan), 0 0 50px var(--neon-cyan); 
+        }
 
-    /* Controls */
-    .controls {
-      position: absolute; bottom: 0; left: 0; right: 0;
-      display: flex; align-items: center; justify-content: space-between;
-      padding: 10px 20px;
-      background: rgba(0,0,0,0.6);
-      border-top: 2px solid var(--neon-cyan);
-    }
-    .btn {
-      font-family:"Press Start 2P", monospace; font-size:14px;
-      background: transparent; border: 2px solid var(--neon-pink);
-      color: var(--neon-pink); padding: 6px 14px; cursor: pointer;
-    }
-    .btn:hover { box-shadow: 0 0 10px var(--neon-pink); }
+        /* Skills with power bars */
+        .skills-grid {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(200px,1fr));
+            gap: 20px; width: 80%; margin-top: 20px;
+        }
+        .skill { text-align: left; }
+        .bar {
+            height: 14px;
+            background: rgba(255,255,255,0.1);
+            border: 2px solid var(--neon-yellow);
+            position: relative;
+        }
+        .fill {
+            height: 100%;
+            background: var(--neon-yellow);
+            box-shadow: 0 0 12px var(--neon-yellow);
+            animation: skill-pulse 2s infinite alternate;
+        }
+        @keyframes skill-pulse {
+            from { box-shadow: 0 0 8px var(--neon-yellow); }
+            to { box-shadow: 0 0 20px var(--neon-yellow); }
+        }
+        
+        /* Controls */
+        .controls {
+            position: fixed; bottom: 0; left: 0; right: 0;
+            display: flex; align-items: center; justify-content: space-between;
+            padding: 10px 20px;
+            background: rgba(0,0,0,0.8);
+            border-top: 2px solid var(--neon-cyan);
+            box-shadow: 0 -5px 20px var(--neon-cyan);
+        }
+        .btn {
+            font-family:"Press Start 2P", monospace; font-size:14px;
+            background: transparent; border: 2px solid var(--neon-pink);
+            color: var(--neon-pink); padding: 6px 14px; cursor: pointer;
+            text-shadow: 0 0 4px var(--neon-pink);
+            transition: all 0.2s;
+        }
+        .btn:hover { 
+            box-shadow: 0 0 10px var(--neon-pink), 0 0 20px var(--neon-pink);
+            background-color: rgba(255, 63, 241, 0.1);
+        }
+        .progress {
+            flex: 1; height: 8px; margin: 0 20px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 4px; overflow: hidden;
+            border: 1px solid var(--neon-cyan);
+        }
+        .progress-bar {
+            height: 100%; width: 0%;
+            background: var(--neon-cyan);
+            box-shadow: 0 0 8px var(--neon-cyan);
+            transition: width 0.4s ease;
+        }
 
-    .progress {
-      flex: 1; height: 8px; margin: 0 20px;
-      background: rgba(255,255,255,0.1);
-      border-radius: 4px; overflow: hidden;
-    }
-    .progress-bar {
-      height: 100%; width: 0%;
-      background: var(--neon-cyan);
-      transition: width 0.4s ease;
-    }
+        /* Contact Terminal */
+        .terminal {
+            background: rgba(0,0,0,0.8);
+            border: 2px solid var(--neon-cyan);
+            padding: 20px; width: 600px; text-align:left;
+            font-family: "VT323", monospace;
+            color: var(--neon-cyan);
+            box-shadow: 0 0 12px var(--neon-cyan);
+            backdrop-filter: blur(4px);
+        }
+        .blink { animation: blink 1s steps(1) infinite; }
+        @keyframes blink { 50% { opacity: 0; } }
 
-    /* Contact Terminal */
-    .terminal {
-      background: rgba(0,0,0,0.8);
-      border: 2px solid var(--neon-cyan);
-      padding: 20px; width: 600px; text-align:left;
-      font-family: "VT323", monospace;
-      color: var(--neon-cyan);
-      box-shadow: 0 0 12px var(--neon-cyan);
-    }
-    .blink {
-      animation: blink 1s steps(1) infinite;
-    }
-    @keyframes blink { 50% { opacity: 0; } }
-  </style>
+        /* Mobile adjustments */
+        @media (max-width: 768px) {
+            h1 { font-size: 24px; }
+            h2 { font-size: 16px; }
+            .btn { font-size: 10px; }
+        }
+    </style>
 </head>
 <body>
-  <div class="slider" id="slider">
-    <!-- Intro -->
-    <section>
-      <h1>Vishwesh</h1>
-      <p>Welcome to my neon arcade of code & circuits.</p>
-    </section>
+    <div class="slider" id="slider">
+        <section>
+            <h1 class="glitch-text">Vishwesh</h1>
+            <p>Welcome to my neon arcade of code & circuits.</p>
+        </section>
 
-    <!-- About -->
-    <section>
-      <div class="arcade-box">
-        <h2>About Me</h2>
-        <p>Shy but curious explorer of retro tech vibes, microcontrollers, and creative web UIs.</p>
-        <p>Gymnast • Badminton player • Gamer • Reader • Tinkerer</p>
-      </div>
-    </section>
+        <section>
+            <div class="arcade-box">
+                <h2>About Me</h2>
+                <p>Shy but curious explorer of retro tech vibes, microcontrollers, and creative web UIs.</p>
+                <p>Gymnast • Badminton player • Gamer • Reader • Tinkerer</p>
+            </div>
+        </section>
 
-    <!-- Projects -->
-    <section>
-      <h2>Projects</h2>
-      <div class="projects-grid">
-        <div class="card"><h3>ESP32 Pixel Buddy</h3><p>Fun OLED animations with ESP32.</p></div>
-        <div class="card"><h3>Motion Glove</h3><p>Gyro-powered glove controlling mouse & games.</p></div>
-        <div class="card"><h3>Algo Visualizer</h3><p>Step-by-step retro algorithm animations.</p></div>
-        <div class="card"><h3>Virtual Gift Site</h3><p>Fancy gradient + polaroid styled web gifting.</p></div>
-      </div>
-    </section>
+        <section>
+            <h2>Projects</h2>
+            <div class="projects-grid">
+                <div class="card"><h3>ESP32 Pixel Buddy</h3><p>Fun OLED animations with ESP32.</p></div>
+                <div class="card"><h3>Motion Glove</h3><p>Gyro-powered glove controlling mouse & games.</p></div>
+                <div class="card"><h3>Algo Visualizer</h3><p>Step-by-step retro algorithm animations.</p></div>
+                <div class="card"><h3>Virtual Gift Site</h3><p>Fancy gradient + polaroid styled web gifting.</p></div>
+            </div>
+        </section>
 
-    <!-- Skills -->
-    <section>
-      <h2>Skills</h2>
-      <div class="skills-grid">
-        <div class="skill"><h3>C++</h3><div class="bar"><div class="fill" style="width:90%"></div></div></div>
-        <div class="skill"><h3>Arduino/ESP32</h3><div class="bar"><div class="fill" style="width:95%"></div></div></div>
-        <div class="skill"><h3>Python</h3><div class="bar"><div class="fill" style="width:80%"></div></div></div>
-        <div class="skill"><h3>Web (HTML/CSS/JS)</h3><div class="bar"><div class="fill" style="width:75%"></div></div></div>
-        <div class="skill"><h3>GitHub</h3><div class="bar"><div class="fill" style="width:70%"></div></div></div>
-      </div>
-    </section>
+        <section>
+            <h2>Skills</h2>
+            <div class="skills-grid">
+                <div class="skill"><h3>C++</h3><div class="bar"><div class="fill" style="width:90%"></div></div></div>
+                <div class="skill"><h3>Arduino/ESP32</h3><div class="bar"><div class="fill" style="width:95%"></div></div></div>
+                <div class="skill"><h3>Python</h3><div class="bar"><div class="fill" style="width:80%"></div></div></div>
+                <div class="skill"><h3>Web (HTML/CSS/JS)</h3><div class="bar"><div class="fill" style="width:75%"></div></div></div>
+                <div class="skill"><h3>GitHub</h3><div class="bar"><div class="fill" style="width:70%"></div></div></div>
+            </div>
+        </section>
 
-    <!-- Contact -->
-    <section>
-      <div class="terminal">
-        <p>> CONNECTING TO PORTFOLIO...</p>
-        <p>> ACCESS GRANTED ✔</p>
-        <p>> EMAIL: <span class="blink">your@email.com</span></p>
-        <p>> GITHUB: <span class="blink">github.com/your-username</span></p>
-        <p>> INSERT COIN TO CONTINUE...</p>
-      </div>
-    </section>
-  </div>
+        <section>
+            <div class="terminal">
+                <p>> CONNECTING TO PORTFOLIO...</p>
+                <p>> ACCESS GRANTED ✔</p>
+                <p>> EMAIL: <span class="blink">your@email.com</span></p>
+                <p>> GITHUB: <span class="blink">github.com/your-username</span></p>
+                <p>> INSERT COIN TO CONTINUE...</p>
+            </div>
+        </section>
+    </div>
 
-  <div class="controls">
-    <button class="btn" id="prev">← Prev</button>
-    <div class="progress"><div class="progress-bar" id="progress"></div></div>
-    <button class="btn" id="next">Next →</button>
-  </div>
+    <div class="controls">
+        <button class="btn" id="prev" aria-label="Previous section">← Prev</button>
+        <div class="progress"><div class="progress-bar" id="progress"></div></div>
+        <button class="btn" id="next" aria-label="Next section">Next →</button>
+    </div>
 
-  <script>
-    const slider = document.getElementById("slider");
-    const progressBar = document.getElementById("progress");
-    const sections = document.querySelectorAll("section");
-    const total = sections.length;
-    let index = 0;
+    <script>
+        const slider = document.getElementById("slider");
+        const progressBar = document.getElementById("progress");
+        const sections = document.querySelectorAll("section");
+        const total = sections.length;
+        let index = 0;
 
-    function updateSlider() {
-      slider.style.transform = `translateX(-${index * 100}%)`;
-      progressBar.style.width = `${((index+1)/total)*100}%`;
-    }
+        function updateSlider() {
+            slider.style.transform = `translateX(-${index * 100}%)`;
+            progressBar.style.width = `${((index + 1) / total) * 100}%`;
+        }
 
-    document.getElementById("prev").onclick = () => { if (index > 0) index--; updateSlider(); };
-    document.getElementById("next").onclick = () => { if (index < total-1) index++; updateSlider(); };
+        document.getElementById("prev").onclick = () => { if (index > 0) index--; updateSlider(); };
+        document.getElementById("next").onclick = () => { if (index < total - 1) index++; updateSlider(); };
 
-    document.addEventListener("keydown", e => {
-      if (e.key === "ArrowRight" && index < total-1) { index++; updateSlider(); }
-      if (e.key === "ArrowLeft" && index > 0) { index--; updateSlider(); }
-    });
+        document.addEventListener("keydown", e => {
+            if (e.key === "ArrowRight" && index < total - 1) { index++; updateSlider(); }
+            if (e.key === "ArrowLeft" && index > 0) { index--; updateSlider(); }
+        });
 
-    updateSlider();
-  </script>
+        updateSlider();
+    </script>
 </body>
 </html>
